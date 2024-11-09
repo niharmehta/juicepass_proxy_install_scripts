@@ -16,11 +16,6 @@ sudo apt-get install -y hostapd dnsmasq iptables-persistent telnet
 sudo systemctl stop dnsmasq
 sudo systemctl stop hostapd
 
-
-# Stop dnsmasq and hostapd if they're already running
-sudo systemctl stop dnsmasq
-sudo systemctl stop hostapd
-
 # Set up static IP configuration for wlan0 in /etc/network/interfaces
 echo "Configuring static IP for wlan0..."
 sudo bash -c 'cat << EOF > /etc/network/interfaces
