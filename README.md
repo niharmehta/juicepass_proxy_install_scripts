@@ -78,16 +78,14 @@ sudo reboot
 
 8)	Install JPP container via command line, docker-compose, or within portainer
 https://github.com/JuiceRescue/juicepassproxy/pull/69 
-https://github.com/ivanfmartinez/juicepassproxy/tree/juicebox_commands
-(using ghcr.io/niharmehta/juicepassproxy:latest) 
 
-You can also use portainer ( http://eth0_ipaddres:9000)
+docker pull ghcr.io/niharmehta/juicepassproxy:latest
+can be referenced as ghcr.io/niharmehta/juicepassproxy:latest
+
+You can also use portainer gui ( http://eth0_ipaddres:9000). You will need to add Github Container Registry as a custom registry  (Name: Github Container Registry, URL = ghcr.io) 
 
 
-In case JPP logs are not showing data from the JB, 
-Try mapping ports udp 8042:8047 and udp 8047:8047 may help. 
-
-Also for NAT mode, you may want to set JPP_Host to the wlan0 IP address : 192.168.50.1 
+Also for NAT mode, you may need to set JPP_Host to the wlan0 IP address : 192.168.50.1 
 
 Network Mode: bridge  
 Port Mapping : 8047:8047 udp
