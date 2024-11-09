@@ -51,7 +51,8 @@ install_jpp_pi_nat.sh
 or:
 install_jpp_pi_routing.sh
 
-* The _nat.sh version sets up a NAT for traffic from the wlan0 (where JB is connected) so that the outside sees it as the ip address of the eth0 interface.  However, only tcp/2000 is forwarded allowing telnet to the JB. No modifications on your home router are necessary.
+* (Recommended) The _nat.sh version sets up a NAT for traffic from the wlan0 (where JB is connected) so that the outside sees it as the ip address of the eth0 interface.  However, only tcp/2000 is forwarded fallowing telnet to the JB from your LAN. No modifications on your home router configuration is necessary as the IP address of the JB will show upas eth0 interface on your Pi. 
+  
 * The _routing.sh option does not do a NAT and allows full routing of all traffic between the wlan0 and eth0 intefaces. This allows you to ping the JB, or add other hosts on the wlan0. However it likely requires adding a static route on your home router for the 192.168.50.0/24 network pointing to the eth0 ip address . (Important that this address is the same every time it boots) 
 
 Use your editor (ie. nano or vi)  to edit the configuration options for JB SSID/Password, JB MacAddres, and other options. Then save. 
