@@ -95,7 +95,7 @@ Volumes:
 /etc/localhost : /etc/localhost - Read-Only
 /config : /config - Writable
 
-Sample env values for JPP container:
+Sample env values for JPP container:  
 DEBUG = true  
 ENELX_IP = 158.47.1.128:8042  
 EXPERIMENTAL = true  
