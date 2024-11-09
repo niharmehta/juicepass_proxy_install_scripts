@@ -69,7 +69,7 @@ chmod +x install_jpp_pi_[nat,routing].sh
 6)	run the script then reboot :
 sudo ./install_jpp_pi_[nat,routing].sh
 
-** When the blue dialogue box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script.
+** When the blue dialog box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script.
 
 
 7)	When complete reboot.
@@ -79,8 +79,9 @@ sudo reboot
 8)	Install JPP container via command line, docker-compose, or within portainer
 https://github.com/JuiceRescue/juicepassproxy/pull/69 
 
-docker pull ghcr.io/niharmehta/juicepassproxy:latest
-can be referenced as ghcr.io/niharmehta/juicepassproxy:latest
+docker pull ghcr.io/niharmehta/juicepassproxy:latest  
+can be referenced as :  
+ghcr.io/niharmehta/juicepassproxy:latest  
 
 You can also use portainer gui ( http://eth0_ipaddres:9000). You will need to add Github Container Registry as a custom registry  (Name: Github Container Registry, URL = ghcr.io) 
 
