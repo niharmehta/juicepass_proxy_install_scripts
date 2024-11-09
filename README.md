@@ -3,8 +3,7 @@ JPP on dedicated Wired + Wireless AP Raspberry Pi
 
 Instructions to configure a Raspberry Pi to act as a dedicated Wireless AP for JB and connect to internal LAN using wired ethernet. 
 
-Packages and services
-JuicePassProxy
+Packages and services installed and configured:
 Docker
 Portainer
 HostAPD (run access point on wlan0)
@@ -14,7 +13,7 @@ Iptables – Perform port intercept & rewrite for 8042 and 8047
 Journtlctl – Tune journal to minimize disk writes for logs
 
 
-Hardware : RPi 3b.
+Tested Hardware : RPi 3b.  Should also owork on Pi 4b/5 . 
 Stable Power supply.
 High endurance, good quality MicroSD.  (Genuine Samsung, SanDisk, Raspberry Pi brand)
 
