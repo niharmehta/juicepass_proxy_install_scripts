@@ -3,6 +3,14 @@ JPP on dedicated Wired + Wireless AP Raspberry Pi
 
 Instructions to configure a Raspberry Pi to act as a dedicated Wireless AP for JB and connect to internal LAN using wired ethernet.   
 
+*** Important: For reliable operation,  CONFIGURE YOUR JUICEBOX TO A NEW SSID THAT IS USED BETWEEN IT AND THE PI WHICH IS ACTING AS A WIFI ACCESS POINT.  
+
+Todo: Tune journalctl config file  to minimize disk wear for journalctl logs    
+Todo: Reduce disk wear logging by moving other log files to memory  
+Todo: Full JPP container deployment within script  
+Todo: Simplify configuration customization by moving config directives as variables at top script.  
+
+
 Packages and services installed and configured:  
 Docker  
 Portainer  
@@ -10,7 +18,7 @@ HostAPD (run access point on wlan0)
 DNSMasq  DHCP server and (DNS Intercept of directory API and jbv1.emotorwerks.com)  
 IPforward – Routing between interfaces  
 Iptables – Perform port intercept & rewrite for 8042 and 8047  
-Journtlctl – Tune journal to minimize disk writes for logs  
+
 
 
 Tested Hardware : RPi 3b.  Should also owork on Pi 4b/5 .   
@@ -71,8 +79,9 @@ sudo ./install_jpp_pi_[nat,routing].sh
 7)	When complete reboot.  
 sudo reboot  
 
+8) If you have not already, reconfigure your Juicebox to the new SSID and Passphrase configured in the hostapd section. 
 
-8)	Install JPP container via command line, docker-compose, or within portainer  
+9)	Install JPP container via command line, docker-compose, or within portainer  
 https://github.com/JuiceRescue/juicepassproxy/pull/69  
 
 docker pull ghcr.io/niharmehta/juicepassproxy:latest  
