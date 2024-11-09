@@ -1,21 +1,21 @@
 JPP on dedicated Wired + Wireless AP Raspberry Pi 
 
 
-Instructions to configure a Raspberry Pi to act as a dedicated Wireless AP for JB and connect to internal LAN using wired ethernet. 
+Instructions to configure a Raspberry Pi to act as a dedicated Wireless AP for JB and connect to internal LAN using wired ethernet.   
 
-Packages and services installed and configured:
-Docker
-Portainer
-HostAPD (run access point on wlan0)
-DNSMasq  DHCP server and (DNS Intercept of directory API and jbv1.emotorwerks.com)
-IPforward – Routing between interfaces
-Iptables – Perform port intercept & rewrite for 8042 and 8047
-Journtlctl – Tune journal to minimize disk writes for logs
+Packages and services installed and configured:  
+Docker  
+Portainer  
+HostAPD (run access point on wlan0)  
+DNSMasq  DHCP server and (DNS Intercept of directory API and jbv1.emotorwerks.com)  
+IPforward – Routing between interfaces  
+Iptables – Perform port intercept & rewrite for 8042 and 8047  
+Journtlctl – Tune journal to minimize disk writes for logs  
 
 
-Tested Hardware : RPi 3b.  Should also owork on Pi 4b/5 . 
-Stable Power supply.
-High endurance, good quality MicroSD.  (Genuine Samsung, SanDisk, Raspberry Pi brand)
+Tested Hardware : RPi 3b.  Should also owork on Pi 4b/5 .   
+Stable Power supply.  
+High endurance, good quality MicroSD.  (Genuine Samsung, SanDisk, Raspberry Pi brand)  
 
 
 
@@ -41,51 +41,48 @@ Finish and Exit
 
 
 
-4)	scp copy your preferred install file to your $HOME directory. You can also vi/nano the filename and paste the contents in. 
-**!! YOU MUST REVIEW SCRIPT AND CONFIGURE THE OPTIONS SPECIFIC TO YOUR ENVIRONMENT  !!**
+4)	scp copy your preferred install file to your $HOME directory. You can also vi/nano the filename and paste the contents in.  
+**!! YOU MUST REVIEW SCRIPT AND CONFIGURE THE OPTIONS SPECIFIC TO YOUR ENVIRONMENT  !!**  
 
 Select the deployment version appropriate for your environment: 
 
-install_jpp_pi_nat.sh
-or:
-install_jpp_pi_routing.sh
+install_jpp_pi_nat.sh  
+or:  
+install_jpp_pi_routing.sh  
 
-* (Recommended) The _nat.sh version sets up a NAT for traffic from the wlan0 (where JB is connected) so that the outside sees it as the ip address of the eth0 interface.  However, only tcp/2000 is forwarded fallowing telnet to the JB from your LAN. No modifications on your home router configuration is necessary as the IP address of the JB will show upas eth0 interface on your Pi. 
+* (Recommended) The _nat.sh version sets up a NAT for traffic from the wlan0 (where JB is connected) so that the outside sees it as the ip address of the eth0 interface.  However, only tcp/2000 is forwarded fallowing telnet to the JB from your LAN. No modifications on your home router configuration is necessary as the IP address of the JB will show up as eth0 interface on your Pi. 
   
-* The _routing.sh option does not do a NAT and allows full routing of all traffic between the wlan0 and eth0 intefaces. This allows you to ping the JB, or add other hosts on the wlan0. However it likely requires adding a static route on your home router for the 192.168.50.0/24 network pointing to the eth0 ip address . (Important that this address is the same every time it boots) 
+* The _routing.sh option does not do a NAT and allows full routing of all traffic between the wlan0 and eth0 intefaces. This allows you to ping the JB, or add other hosts on the wlan0. However it likely requires adding a static route on your home router for the 192.168.50.0/24 network pointing to the eth0 ip address . (Important that this address is the same every time it boots)  
 
 Use your editor (ie. nano or vi)  to edit the configuration options for JB SSID/Password, JB MacAddres, and other options. Then save. 
 
 
 
-5)	Back on the ssh command line, set the script you installed  to be executable
-chmod +x install_jpp_pi_[nat,routing].sh
+5)	Back on the ssh command line, set the script you installed  to be executable  
+chmod +x install_jpp_pi_[nat,routing].sh  
 
 
+6)	run the script then reboot:  
+sudo ./install_jpp_pi_[nat,routing].sh  
+
+** When the blue dialog box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script.  
 
 
-
-6)	run the script then reboot :
-sudo ./install_jpp_pi_[nat,routing].sh
-
-** When the blue dialog box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script.
+7)	When complete reboot.  
+sudo reboot  
 
 
-7)	When complete reboot.
-sudo reboot
-
-
-8)	Install JPP container via command line, docker-compose, or within portainer
-https://github.com/JuiceRescue/juicepassproxy/pull/69 
+8)	Install JPP container via command line, docker-compose, or within portainer  
+https://github.com/JuiceRescue/juicepassproxy/pull/69  
 
 docker pull ghcr.io/niharmehta/juicepassproxy:latest  
 can be referenced as :  
 ghcr.io/niharmehta/juicepassproxy:latest  
 
-You can also use portainer gui ( http://eth0_ipaddres:9000). You will need to add Github Container Registry as a custom registry  (Name: Github Container Registry, URL = ghcr.io) 
+You can also use portainer gui ( http://eth0_ipaddres:9000). You will need to add Github Container Registry as a custom registry  (Name: Github Container Registry, URL = ghcr.io)   
 
 
-Also for NAT mode, you may need to set JPP_Host to the wlan0 IP address : 192.168.50.1 
+Also for NAT mode, you may need to set JPP_Host to the wlan0 IP address : 192.168.50.1   
 
 Network Mode: bridge  
 Port Mapping : 8047:8047 udp
