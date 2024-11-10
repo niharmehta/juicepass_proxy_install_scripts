@@ -5,8 +5,6 @@ Instructions to configure a Raspberry Pi to act as a dedicated Wireless AP for J
 
 *** Important: For reliable operation,  CONFIGURE YOUR JUICEBOX TO A NEW SSID THAT IS USED BETWEEN IT AND THE PI WHICH IS ACTING AS A WIFI ACCESS POINT.  
 
-
-
 Packages and services installed and configured:  
 Docker  
 Portainer  
@@ -35,27 +33,25 @@ Stable Power supply.
 High endurance, good quality MicroSD.  (Genuine Samsung, SanDisk, Raspberry Pi brand)  
 
 
-
-1)	Use Raspberry Pi install to image microsd for os.
+1)	Use Raspberry Pi Imager app  to image the operationg system to the sdcard.
 Recommend to use 64bit ‘lite’ version (3b/4b/5) 
 After, remove card from PC/Mac and insert and power on Pi. Wait 3-4 minutes for initial boot. 
-<img width="535" alt="Screenshot 2024-11-09 at 12 34 51 AM" src="https://github.com/user-attachments/assets/21ddee12-b4f2-4b69-8076-72f3e6b4a9f5">
-
-
-
-
+<img width="535" alt="Screenshot 2024-11-09 at 12 34 51 AM" src="https://github.com/user-attachments/assets/21ddee12-b4f2-4b69-8076-72f3e6b4a9f5"
  
 
+2)	Find IP address from your router. It is recommended you make this or another ip address a static dhcp reservation on your router. 
 
-2)	Find IP address from your router. It is recommended you make this ip address a static dhcp reservation. 
+3)	Connect to your Pi over ssh (ssh user@ipaddress) using the user/password set during imaging.
 
+4)	Retrieve the latest install script from Github:  
+wget https://raw.githubusercontent.com/niharmehta/juicepass_proxy_install_scripts/refs/heads/main/install_jpp_pi.sh
 
-
-3)	scp copy  the install script to your $HOME directory. It will be /home/$USER which is the user created during imaging...
-You can also vi/nano the filename and paste the contents in.  
+Edit the file install_jpp_pi.sh using nano or vi.  
+nano ./install_jpp_pi.sh  
+or  
+vi ./install_jpp_pi.sh
+  
 **!! YOU MUST REVIEW SCRIPT AND CONFIGURE THE OPTIONS SPECIFIC TO YOUR ENVIRONMENT  !!**  
-
-ie.   scp install_jpp_pi_.sh  $USER@192.168.1.99:/home/$USER  
 
 The script will run in two modes based on arguments passduring when running the script  --mode=nat and --mode=routing.  The NAT mode is default if no value is passed . 
 
@@ -66,11 +62,8 @@ The script will run in two modes based on arguments passduring when running the 
 Use your editor (ie. nano or vi)  to edit the configuration options for JB SSID/Password, JB MacAddres, and other options. Then save. 
 
 
-4)	Connect to your Pi over ssh (ssh user@ipaddress) using the user/password set during imaging.
-
 5)	Back on the ssh command line, set the script you installed  to be executable  
 chmod +x install_jpp_pi.sh  
-
 
 6)	run the script with optional arguments then reboot:  
 sudo ./install_jpp_pi.sh  [--mode=nat or --mode=routing] 
@@ -79,8 +72,6 @@ sudo ./install_jpp_pi.sh  [--mode=nat or --mode=routing]
 
 7) If you have not already, reconfigure your Juicebox to the new SSID and Passphrase configured in the hostapd section. 
 8) Your Juicepassproxy is now ready to use. It should connect to your Juicebox and MQTT server. 
-
-
 
 --------------
 This script moves /logs and journald logs to memory to reduce sdcard wear.  By default, logs from the Juicepassproxy will be handled by the journald process in the host operating sytstem. The journald process has been configured to only log to memory, so it is not persistant across reboots, and caps the memory used by the logging to 32MB before the logs are trimmed.  If you need to review logs, these commands can be used to review logs:
