@@ -77,12 +77,8 @@ sudo ./install_jpp_pi.sh  [--mode=nat or --mode=routing]
 
 ** IF A netfilter/iptables persistant dialog box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script. This should not be neceessary as 
 
-
-7)	When complete reboot.  
-sudo reboot  
-
-8) If you have not already, reconfigure your Juicebox to the new SSID and Passphrase configured in the hostapd section. 
-9) Your Juicepassproxy is now ready to use. It should connect to your Juicebox and MQTT server. 
+7) If you have not already, reconfigure your Juicebox to the new SSID and Passphrase configured in the hostapd section. 
+8) Your Juicepassproxy is now ready to use. It should connect to your Juicebox and MQTT server. 
 
 
 
