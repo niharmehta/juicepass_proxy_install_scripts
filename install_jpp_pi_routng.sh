@@ -26,15 +26,47 @@ JPP_EXPERIMENTAL=true
 JPP_IGNORE_ENELX=true
 JPP_JPP_HOST=$ETH0_IP      # use eth0 IP address. Replace with 192.168.50.1 if problems 
 JPP_UPDATE_UDPC=false
-JPP_LOG_DRIVER=json-file
+JPP_LOG_DRIVER=none 	# does not write to docker log . instead writes to /log/juicepassproxy.log
 JPP_IMAGE=ghcr.io/niharmehta/juicepassproxy:latest
 JPP_ENELX_IP="158.47.1.128:8042"
+
+# Mount /var/log as tmpfs to store logs in memory
+echo "Mounting /var/log to tmpfs..."
+sudo bash -c "echo 'tmpfs /var/log tmpfs defaults,noatime,nosuid,mode=0755,size=32M 0 0' >> /etc/fstab"
+sudo systemctl daemon-reload
+sudo umount /var/log
+sudo mount /var/log
+
 
 # Configure journald to store logs in memory with a maximum of 32MB
 echo "Configuring journald to use volatile storage with a 32MB limit..."
 sudo sed -i '/^#*Storage=/c\Storage=volatile' /etc/systemd/journald.conf
 sudo sed -i '/^#*RuntimeMaxUse=/c\RuntimeMaxUse=32M' /etc/systemd/journald.conf
+sudo sed -i '/^#*RuntimeMaxFileSize=/c\RuntimeMaxFileSize=2M' /etc/systemd/journald.conf
 sudo systemctl restart systemd-journald
+
+# Disable avahi-daemon
+sudo systemctl disable avahi-daemon
+sudo systemctl stop avahi-daemon
+sudo systemctl mask avahi-daemon
+
+
+# Configure logrotate for /var/log
+echo "Configuring logrotate for /var/log to rotate at 2MB and keep 2 files..."
+sudo bash -c "cat << EOF > /etc/logrotate.d/varlog
+/var/log/*.log {
+    size 2M
+    rotate 2
+    compress
+    missingok
+    notifempty
+    create 0640 root utmp
+    sharedscripts
+    postrotate
+        systemctl restart rsyslog > /dev/null 2>&1 || true
+    endscript
+}
+EOF"
 
 
 
@@ -42,7 +74,7 @@ sudo systemctl restart systemd-journald
 echo "Installing required packages and updates..."
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install -y hostapd dnsmasq iptables-persistent telnet
+sudo apt-get install -y hostapd dnsmasq iptables-persistent telnet iotop
 
 # Stop dnsmasq and hostapd if they're already running
 sudo systemctl stop dnsmasq
@@ -170,6 +202,7 @@ sudo docker run -d --name juicebox-commands \
   -p 8047:8047/udp \
   -v /config:/config \
   -v /etc/localtime:/etc/localtime:ro \
+  -v /var/log:/log \
   --restart always \
   $JPP_IMAGE
 
