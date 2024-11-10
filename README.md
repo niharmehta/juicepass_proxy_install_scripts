@@ -34,16 +34,16 @@ High endurance, good quality MicroSD.  (Genuine Samsung, SanDisk, Raspberry Pi b
 
 
 1)	Use Raspberry Pi Imager app  to image the operationg system to the sdcard.
-Recommend to use 64bit ‘lite’ version (3b/4b/5) 
+Recommend to use 64bit ‘lite’ version (3b/4b/5)
+Use the imager to set the  hostname, username, password, locale.  You do not need to configure wireless LAN here.
 After, remove card from PC/Mac and insert and power on Pi. Wait 3-4 minutes for initial boot. 
-<img width="535" alt="Screenshot 2024-11-09 at 12 34 51 AM" src="https://github.com/user-attachments/assets/21ddee12-b4f2-4b69-8076-72f3e6b4a9f5"
- 
+<img width="535" alt="Screenshot 2024-11-09 at 12 34 51 AM" src="https://github.com/user-attachments/assets/bcde6ae3-e20f-4d2e-9a2f-374704fe0486">
 
-2)	Find IP address from your router. It is recommended you make this or another ip address a static dhcp reservation on your router. 
+3)	Find IP address from your router. It is recommended you make this or another ip address a static dhcp reservation on your router. 
 
-3)	Connect to your Pi over ssh (ssh user@ipaddress) using the user/password set during imaging.
+4)	Connect to your Pi over ssh (ssh user@ipaddress) using the user/password set during imaging.
 
-4)	Retrieve the latest install script from Github:  
+5)	Retrieve the latest install script from Github:  
 wget https://raw.githubusercontent.com/niharmehta/juicepass_proxy_install_scripts/refs/heads/main/install_jpp_pi.sh
 
 Edit the file install_jpp_pi.sh using nano or vi.  
