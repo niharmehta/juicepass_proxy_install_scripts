@@ -44,12 +44,12 @@ After, remove card from PC/Mac and insert and power on Pi. Wait 3-4 minutes for 
 4)	Connect to your Pi over ssh (ssh user@ipaddress) using the user/password set during imaging.
 
 5)	Retrieve the latest install script from Github:  
-wget https://raw.githubusercontent.com/niharmehta/juicepass_proxy_install_scripts/refs/heads/main/install_jpp_pi.sh
+``` wget https://raw.githubusercontent.com/niharmehta/juicepass_proxy_install_scripts/refs/heads/main/install_jpp_pi.sh ```
 
 Edit the file install_jpp_pi.sh using nano or vi.  
-nano ./install_jpp_pi.sh  
+``` nano ./install_jpp_pi.sh ```  
 or  
-vi ./install_jpp_pi.sh
+``` vi ./install_jpp_pi.sh ```
   
 **!! YOU MUST REVIEW SCRIPT AND CONFIGURE THE OPTIONS SPECIFIC TO YOUR ENVIRONMENT  !!**  
 
@@ -63,10 +63,10 @@ Use your editor (ie. nano or vi)  to edit the configuration options for JB SSID/
 
 
 5)	Back on the ssh command line, set the script you installed  to be executable  
-chmod +x install_jpp_pi.sh  
+``` chmod +x install_jpp_pi.sh ``` 
 
 6)	run the script with optional arguments then reboot:  
-sudo ./install_jpp_pi.sh  [--mode=nat or --mode=routing] 
+``` sudo ./install_jpp_pi.sh  [--mode=nat or --mode=routing]  ```
 
 ** IF A netfilter/iptables persistant dialog box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script. This should not be neceessary as 
 
@@ -77,9 +77,9 @@ sudo ./install_jpp_pi.sh  [--mode=nat or --mode=routing]
 This script moves /logs and journald logs to memory to reduce sdcard wear.  By default, logs from the Juicepassproxy will be handled by the journald process in the host operating sytstem. The journald process has been configured to only log to memory, so it is not persistant across reboots, and caps the memory used by the logging to 32MB before the logs are trimmed.  If you need to review logs, these commands can be used to review logs:
 
 Cat current logs related to the juicebox-commands container  
-sudo journalctl CONTAINER_NAME=juicebox-commands  
+``` sudo journalctl CONTAINER_NAME=juicebox-commands ``` 
 
 Follow logs in real time.  
-sudo journalctl -f CONTAINER_NAME=juicebox-commands  
+``` sudo journalctl -f CONTAINER_NAME=juicebox-commands  ```
 
 Although not recommended and likely not needed, the $JPP_LOG_LOC can be set to '/log' which will then create a log file  /var/log/juicepassproxy.log . The script sets /var/log to tempfs (memory) and logrorate SHOULD rotate this log file.  Use the default journalctl method to handle logs if possible. 
