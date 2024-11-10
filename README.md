@@ -49,40 +49,33 @@ After, remove card from PC/Mac and insert and power on Pi. Wait 3-4 minutes for 
 
 2)	Find IP address from your router. It is recommended you make this ip address a static dhcp reservation. 
 
-3)	Connect to your Pi over ssh (ssh user@ipaddress) using the user/password set during imaging.  
-Let wireless 
-sudo raspi-config
-Localisation Options -> WLAN Country -> <select_country>
-
-Finish and Exit
 
 
-
-4)	scp copy your preferred install file to your $HOME directory. You can also vi/nano the filename and paste the contents in.  
+3)	scp copy  the install script to your $HOME directory. It will be /home/$USER which is the user created during imaging...
+You can also vi/nano the filename and paste the contents in.  
 **!! YOU MUST REVIEW SCRIPT AND CONFIGURE THE OPTIONS SPECIFIC TO YOUR ENVIRONMENT  !!**  
 
-Select the deployment version appropriate for your environment: 
+ie.   scp install_jpp_pi_.sh  $USER@192.168.1.99:/home/$USER  
 
-install_jpp_pi_nat.sh  
-or:  
-install_jpp_pi_routing.sh  
+The script will run in two modes based on arguments passduring when running the script  --mode=nat and --mode=routing.  The NAT mode is default if no value is passed . 
 
-* (Recommended) The _nat.sh version sets up a NAT for traffic from the wlan0 (where JB is connected) so that the outside sees it as the ip address of the eth0 interface.  However, only tcp/2000 is forwarded fallowing telnet to the JB from your LAN. No modifications on your home router configuration is necessary as the IP address of the JB will show up as eth0 interface on your Pi. 
+* (Recommended & Default) The --mode=nat  argument  sets up a NAT for traffic from the wlan0 (where JB is connected) so that the outside sees it as the ip address of the eth0 interface.  However, only tcp/2000 is forwarded fallowing telnet to the JB from your LAN. No modifications on your home router configuration is necessary as the IP address of the JB will show up as eth0 interface on your Pi. 
   
-* The _routing.sh option does not do a NAT and allows full routing of all traffic between the wlan0 and eth0 intefaces. This allows you to ping the JB, or add other hosts on the wlan0. However it likely requires adding a static route on your home router for the 192.168.50.0/24 network pointing to the eth0 ip address . (Important that this address is the same every time it boots)  
+* The --mode=routing argument does not do a NAT to the eth0 IP and allows full routing of all traffic between the wlan0 and eth0 intefaces. This allows you to ping the JB, or add other hosts on the wlan0. However it likely requires adding a static route on your home router for the 192.168.50.0/24 network pointing to the eth0 ip address of your pi . (Important that this address is the same every time it boots)  
 
 Use your editor (ie. nano or vi)  to edit the configuration options for JB SSID/Password, JB MacAddres, and other options. Then save. 
 
 
+4)	Connect to your Pi over ssh (ssh user@ipaddress) using the user/password set during imaging.
 
 5)	Back on the ssh command line, set the script you installed  to be executable  
-chmod +x install_jpp_pi_[nat,routing].sh  
+chmod +x install_jpp_pi.sh  
 
 
-6)	run the script then reboot:  
-sudo ./install_jpp_pi_[nat,routing].sh  
+6)	run the script with optional arguments then reboot:  
+sudo ./install_jpp_pi.sh  [--mode=nat or --mode=routing] 
 
-** When the blue dialog box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script.  
+** IF A netfilter/iptables persistant dialog box pops up asking if you want to save your netfilter rules (iptables rules) .. say NO as it is a new install . Rules will be added later in the script. This should not be neceessary as 
 
 
 7)	When complete reboot.  
