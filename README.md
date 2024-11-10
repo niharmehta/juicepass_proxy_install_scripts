@@ -83,3 +83,8 @@ Follow logs in real time.
 ``` sudo journalctl -f CONTAINER_NAME=juicebox-commands  ```
 
 Although not recommended and likely not needed, the $JPP_LOG_LOC can be set to '/log' which will then create a log file  /var/log/juicepassproxy.log . The script sets /var/log to tempfs (memory) and logrorate SHOULD rotate this log file.  Use the default journalctl method to handle logs if possible. 
+
+
+-------------
+If you are not comfortable managing docker containers from the command line, Portainer-CE is included in this script. Portainer provides a GUI for docker containers.  You can use Portainer to change container settings or pull a new version.  This is done by duplicating the existing container, making the changes (or just forcing a new pull) and the container will update.   
+By default, Portainer-CE does not include the Github Container Registry.  If you need to pull other containers from there, add a new Custom Registry with the Name Github Container Registry and the url just ``` ghcr.io ``` . It will then show up when trying to create a new container. 
