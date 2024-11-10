@@ -6,7 +6,7 @@ Instructions to configure a Raspberry Pi to act as a dedicated Wireless AP for J
 *** Important: For reliable operation,  CONFIGURE YOUR JUICEBOX TO A NEW SSID THAT IS USED BETWEEN IT AND THE PI WHICH IS ACTING AS A WIFI ACCESS POINT.  
 
 Packages and services installed and configured:  
-JuicePassProxy -  @ivanfmartinez juicebox_commands branch. 
+JuicePassProxy -  @ivanfmartinez juicebox_commands branch.    
 Docker  
 Portainer  
 HostAPD (run access point on wlan0)  
