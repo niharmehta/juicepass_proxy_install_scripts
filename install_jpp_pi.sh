@@ -9,6 +9,7 @@ CURRENT_USER=$(whoami)
 
 JB_WLAN="YourSSIDHere"          # SSID for the private Juicebox Wi-Fi network to the Pi
 JB_WLAN_PASSWORD="YourPasswordHere"     # Wi-Fi password for the private Juicebox Wi-Fi network
+JB_WLAN_CHANNEL="1"   # Default to 2.Ghz Channel 1. Change if needed
 JB_MAC="00:11:22:33:44:55"           # MAC address of the JuiceBox
 JPP_JUICEBOX_ID="Your JB Serial/Device ID Here"
 JPP_MQTT_HOST="Your MQTT SERVER IP"
@@ -137,7 +138,7 @@ interface=wlan0
 driver=nl80211
 ssid=$JB_WLAN
 hw_mode=g
-channel=1
+channel=$JB_WLAN_CHANNEL
 ieee80211n=1
 wmm_enabled=1
 auth_algs=1
