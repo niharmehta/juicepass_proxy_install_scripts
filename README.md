@@ -95,9 +95,11 @@ sudo reboot
 
 --------------
 This script moves /logs and journald logs to memory to reduce sdcard wear.  By default, logs from the Juicepassproxy will be handled by the journald process in the host operating sytstem. The journald process has been configured to only log to memory, so it is not persistant across reboots, and caps the memory used by the logging to 32MB before the logs are trimmed.  If you need to review logs, these commands can be used to review logs:
-# Cat current logs related to the juicebox-commands container
-sudo journalctl CONTAINER_NAME=juicebox-commands
-# Follow logs in real time.
-sudo journalctl -f CONTAINER_NAME=juicebox-commands
 
-Although not recommended, the $JPP_LOG_LOC can be set to '/log' which will then show up on the host operating in /var/log/ which is also in volatile memory (tempfs) 
+Cat current logs related to the juicebox-commands container  
+sudo journalctl CONTAINER_NAME=juicebox-commands  
+
+Follow logs in real time.  
+sudo journalctl -f CONTAINER_NAME=juicebox-commands  
+
+Although not recommended and likely not needed, the $JPP_LOG_LOC can be set to '/log' which will then create a log file  /var/log/juicepassproxy.log . The script sets /var/log to tempfs (memory) and logrorate SHOULD rotate this log file.  Use the default journalctl method to handle logs if possible. 
