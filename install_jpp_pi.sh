@@ -238,4 +238,7 @@ sudo docker run -d --name juicebox-commands \
   --restart always \
   $JPP_IMAGE
 
-echo "Installation and configuration complete. 'sudo reboot' the system to apply all settings and start JPP. Use CLI or Portainer to manage the container."
+echo "Installation and configuration complete.  Rebooting in 15 seconds. Ctrl-C to cancel"
+sleep 15
+echo "Rebooting Now" 
+sudo reboot
