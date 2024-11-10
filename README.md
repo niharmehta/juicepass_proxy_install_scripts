@@ -5,9 +5,6 @@ Instructions to configure a Raspberry Pi to act as a dedicated Wireless AP for J
 
 *** Important: For reliable operation,  CONFIGURE YOUR JUICEBOX TO A NEW SSID THAT IS USED BETWEEN IT AND THE PI WHICH IS ACTING AS A WIFI ACCESS POINT.  
 
-Todo: Tune journalctl config file  to minimize disk wear for journalctl logs    
-Todo: Reduce disk wear logging by moving other log files to memory  
-
 
 
 Packages and services installed and configured:  
@@ -17,10 +14,23 @@ HostAPD (run access point on wlan0)
 DNSMasq  DHCP server and (DNS Intercept of directory API and jbv1.emotorwerks.com)  
 IPforward – Routing between interfaces  
 Iptables – Perform port intercept & rewrite for 8042 and 8047  
-JuicePass Proxy Commands Container
+JuicePass Proxy - The main application container to interface  with Juicebox and your MQTT server (and more)   
+iotop - disk diagnostics  
+logrotate - creates an entry for rotating the log juicepassproxy log file 
+journtald - moves log file to  ram  and limits size. 
 
 
-Tested Hardware : RPi 3b.  Should also owork on Pi 4b/5 .   
+This script also makes some changes to minimize writes to the SDCard to limit its wear over time. 
+This includes:
+* Moving journalctl logs to ram
+* Moving /var/log to tmpfs ram and using aggressive logrotate sizes
+* For the JuicePassProxy container, setting the log driver to none for docker logs. However...
+* JuicepassProxy currenty writes to an internal log file built. So disabling driver does not eliminate writes.
+* Mapping Container /log directory to /var/log tmpfs allows us to reduce writes.
+* /var/log/juicepassproxy.log will contain the real time logs from JPP.  
+
+
+Tested Hardware : RPi 3b   Should also owork on Pi 4b/5 .  Recommend at least 1GB or RAM. 
 Stable Power supply.  
 High endurance, good quality MicroSD.  (Genuine Samsung, SanDisk, Raspberry Pi brand)  
 
