@@ -22,10 +22,9 @@ This script also makes some changes to minimize writes to the SDCard to limit it
 This includes:
 * Moving journalctl logs to ram
 * Moving /var/log to tmpfs ram and using aggressive logrotate sizes
-* For the JuicePassProxy container, setting the log driver to none for docker logs. However...
-* JuicepassProxy currenty writes to an internal log file built. So disabling driver does not eliminate writes.
+* For the JuicePassProxy container, setting the log driver to journald for docker log and --LOG_LOC=none
 * Mapping Container /log directory to /var/log tmpfs allows us to reduce writes.
-* /var/log/juicepassproxy.log will contain the real time logs from JPP.  
+* --LOG_LOG=/log will write to host /var/log/juicepassproxy.log will contain the real time logs from JPP. This should not be needed with journald memory logs.
 
 
 Tested Hardware : RPi 3b   Should also owork on Pi 4b/5 .  Recommend at least 1GB or RAM. 
